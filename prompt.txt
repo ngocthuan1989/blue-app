@@ -1,0 +1,11 @@
+prompt
+
+tôi muốn bạn căn cứ vào nội dung file excel đó, và xây dựng cho tôi một trang web app  
+   về quản lý tiết độ thật dễ sử dụng, ux ui tốt, bạn có thể tham khảo skill ux ui pro    
+   max và các skill về nextjs để làm dự án công nghệ nextjs nhé, tôi muốn phải dễ sử dụng 
+   nhất cho người dùng, và làm cấp độ production hoàn thiện chứ không cần chú thích dài   
+   dòng, ok bạn có thể tạo thư mục khác và làm để không xung đột với hiện tại, với port   
+   3005 nhé. và dùng font chữ dễ đọc dễ nhìn, ít nhất, màu sắc theo hướng màu xanh dương, 
+   icon theo hướng đơn giản dạng nét vẽ, tông màu sáng, phong cách nhỏ gọn và tối ưu      
+   không gian, và web app này sẽ thêm xóa sửa dữ liệu, đọc dữ liệu từ file excel đó luôn  
+   nhé 
