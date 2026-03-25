@@ -18,56 +18,57 @@ export function AcceptanceModal({ acceptance, onClose, action, projects }) {
   });
 
   return (
-    <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200">
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-          <h3 className="font-bold text-slate-700">{acceptance ? "Sửa bản ghi nghiệm thu" : "Thêm biên bản nghiệm thu"}</h3>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600"><X size={18} /></button>
+    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-end md:items-center justify-center p-0 md:p-4 transition-all">
+      <div className="bg-white rounded-t-3xl md:rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200 animate-in pb-10 md:pb-0">
+        <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mt-3 mb-1 md:hidden" />
+        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-white md:bg-slate-50/50">
+          <h3 className="font-black text-slate-700 uppercase text-xs tracking-widest">{acceptance ? "Sửa bản ghi nghiệm thu" : "Lập biên bản nghiệm thu"}</h3>
+          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 bg-slate-100 md:bg-transparent rounded-full"><X size={18} /></button>
         </div>
-        <form action={async (fd) => { await action(fd); onClose(); }} className="p-6 space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+        <form action={async (fd) => { await action(fd); onClose(); }} className="p-6 space-y-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-slate-500 uppercase">Mã NT</label>
-              <input name="acceptance_id" defaultValue={formData.acceptance_id} readOnly className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-400 text-xs outline-none" />
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Mã NT</label>
+              <input name="acceptance_id" defaultValue={formData.acceptance_id} readOnly className="w-full px-4 py-3 md:py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-400 text-sm outline-none font-mono" />
             </div>
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-slate-500 uppercase">Dự án</label>
-              <select name="project_id" defaultValue={formData.project_id} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none bg-white">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Dự án công trình</label>
+              <select name="project_id" defaultValue={formData.project_id} className="w-full px-4 py-3 md:py-2 border border-slate-200 rounded-xl text-sm outline-none bg-white focus:ring-2 focus:ring-blue-100">
                 {projects.map(p => (<option key={p.project_id} value={p.project_id}>{p.ten_du_an}</option>))}
               </select>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-slate-500 uppercase">Loại nghiệm thu</label>
-              <input name="loai_nghiem_thu" defaultValue={formData.loai_nghiem_thu} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none" />
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Loại hình nghiệm thu</label>
+              <input name="loai_nghiem_thu" defaultValue={formData.loai_nghiem_thu} className="w-full px-4 py-3 md:py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-100" />
             </div>
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-slate-500 uppercase">Ngày nghiệm thu</label>
-              <input name="ngay_nghiem_thu" type="date" defaultValue={formData.ngay_nghiem_thu ? String(formData.ngay_nghiem_thu).split('T')[0] : ""} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none" />
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Ngày thực hiện</label>
+              <input name="ngay_nghiem_thu" type="date" defaultValue={formData.ngay_nghiem_thu ? String(formData.ngay_nghiem_thu).split('T')[0] : ""} className="w-full px-4 py-3 md:py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-100" />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-slate-500 uppercase">Kết quả</label>
-              <select name="ket_qua" defaultValue={formData.ket_qua} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none bg-white">
-                <option value="Đạt">Đạt</option>
-                <option value="Đạt có tồn">Đạt có tồn</option>
-                <option value="Không đạt">Không đạt</option>
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Kết quả thẩm định</label>
+              <select name="ket_qua" defaultValue={formData.ket_qua} className="w-full px-4 py-3 md:py-2 border border-slate-200 rounded-xl text-sm outline-none bg-white focus:ring-2 focus:ring-blue-100">
+                <option value="Đạt">✅ Đạt yêu cầu</option>
+                <option value="Đạt có tồn">⚠️ Đạt có tồn đọng</option>
+                <option value="Không đạt">❌ Không đạt</option>
               </select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-slate-500 uppercase">Biên bản số</label>
-              <input name="bien_ban_so" defaultValue={formData.bien_ban_so} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none" />
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Số hiệu biên bản</label>
+              <input name="bien_ban_so" defaultValue={formData.bien_ban_so} className="w-full px-4 py-3 md:py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-100" />
             </div>
           </div>
           <div className="space-y-1.5">
-            <label className="text-[11px] font-bold text-slate-500 uppercase">Nội dung tồn</label>
-            <textarea name="ton_sau_nghiem_thu" defaultValue={formData.ton_sau_nghiem_thu} rows={2} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none" />
+            <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Ghi chú các hạng mục tồn đọng</label>
+            <textarea name="ton_sau_nghiem_thu" defaultValue={formData.ton_sau_nghiem_thu} rows={2} className="w-full px-4 py-3 md:py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-100" />
           </div>
-          <div className="pt-4 flex items-center justify-end gap-3 border-t border-slate-100">
-            <button type="button" onClick={onClose} className="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-700 transition-colors">Hủy bỏ</button>
-            <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 text-xs font-bold shadow-lg shadow-blue-500/20 transition-all"><Save size={14} /> Lưu thay đổi</button>
+          <div className="pt-6 flex flex-col md:flex-row items-center justify-end gap-3 border-t border-slate-100">
+            <button type="button" onClick={onClose} className="w-full md:w-auto px-6 py-3 md:py-2 text-sm font-bold text-slate-400 hover:text-slate-600 transition-colors order-2 md:order-1">Hủy bỏ</button>
+            <button type="submit" className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 md:py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm font-black shadow-xl shadow-blue-200 transition-all active:scale-95 order-1 md:order-2"><Save size={18} /> Lưu thay đổi</button>
           </div>
         </form>
       </div>

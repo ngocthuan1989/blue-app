@@ -62,35 +62,35 @@ export default function PaymentClientPage({ initialPayments, projects }) {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 px-0 md:px-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-bold text-slate-800">Tài chính & Thanh toán</h1>
-          <p className="text-slate-500 text-xs">Theo dõi dòng tiền thu khách hàng và chi nhà cung cấp</p>
+          <p className="text-slate-500 text-xs uppercase font-bold tracking-wider mt-0.5">Theo dõi dòng tiền thu & chi</p>
         </div>
         <button 
           onClick={handleAdd}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-xs font-bold transition-all shadow-md shadow-blue-500/10"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:py-2 rounded-xl flex items-center justify-center gap-2 text-sm sm:text-xs font-bold transition-all shadow-lg shadow-blue-200 active:scale-95 w-full sm:w-auto"
         >
-          <Plus size={16} /> Thêm đợt thu/chi
+          <Plus size={18} /> Thêm đợt thu/chi
         </button>
       </div>
 
-      <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
-        <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+      <div className="bg-white p-2 sm:p-3 rounded-xl border border-slate-200 shadow-sm">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
           <input 
             type="text" 
-            placeholder="Tìm theo tên dự án hoặc đợt thanh toán..."
+            placeholder="Tìm theo dự án hoặc đợt thanh toán..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500"
+            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm sm:text-xs outline-none focus:ring-2 focus:ring-blue-100 transition-all"
           />
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="bg-white md:rounded-xl border-y md:border border-slate-200 shadow-sm overflow-hidden -mx-4 md:mx-0">
+        <div className="table-container">
           <table className="compact-table">
             <thead>
               <tr>
@@ -148,28 +148,28 @@ export default function PaymentClientPage({ initialPayments, projects }) {
             <tbody>
               {sortedData.map((p) => (
                 <tr key={p.payment_id}>
-                  <td className="text-slate-500 max-w-[200px] truncate" title={getProjectName(p.project_id)}>
+                  <td data-label="Dự án" className="text-slate-500 font-bold md:font-normal text-xs md:max-w-[200px] truncate" title={getProjectName(p.project_id)}>
                     {getProjectName(p.project_id)}
                   </td>
-                  <td className="font-semibold text-slate-700">{p.dot_thanh_toan}</td>
-                  <td>
+                  <td data-label="Đợt TT" className="font-bold text-slate-700 text-sm md:text-xs">{p.dot_thanh_toan}</td>
+                  <td data-label="Loại">
                     <span className={cn(
-                      "text-[10px] font-bold px-1.5 py-0.5 rounded",
-                      p.loai === "Thu khách hàng" ? "bg-blue-50 text-blue-600" : "bg-orange-50 text-orange-600"
+                      "text-[10px] font-black px-2 py-0.5 rounded uppercase",
+                      p.loai === "Thu khách hàng" ? "bg-blue-50 text-blue-600 border border-blue-100" : "bg-orange-50 text-orange-600 border border-orange-100"
                     )}>
                       {p.loai}
                     </span>
                   </td>
-                  <td className="font-bold">{formatCurrency(p.so_tien)} đ</td>
-                  <td className="text-slate-500 text-[11px]">
-                    <div className="flex items-center gap-1">
-                      <Calendar size={12} className="opacity-40" />
+                  <td data-label="Số tiền" className="font-black text-slate-800">{formatCurrency(p.so_tien)} đ</td>
+                  <td data-label="Đến hạn" className="text-slate-500 text-[11px] font-bold">
+                    <div className="flex items-center gap-1 justify-end md:justify-start">
+                      <Calendar size={12} className="opacity-40 hidden md:block" />
                       {p.ngay_den_han ? String(p.ngay_den_han).split('T')[0] : "-"}
                     </div>
                   </td>
-                  <td>
+                  <td data-label="Trạng thái">
                     <span className={cn(
-                      "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase",
+                      "px-2 py-0.5 rounded-full text-[10px] font-black uppercase",
                       p.trang_thai === 'Đã thanh toán' ? "bg-green-100 text-green-700" :
                       p.trang_thai === 'Quá hạn' ? "bg-red-100 text-red-700" :
                       "bg-slate-100 text-slate-600"
@@ -177,19 +177,21 @@ export default function PaymentClientPage({ initialPayments, projects }) {
                       {p.trang_thai}
                     </span>
                   </td>
-                  <td className="text-right">
-                    <div className="flex items-center justify-end gap-1">
+                  <td className="text-right pt-4 md:pt-1.5 border-t border-slate-50 md:border-none">
+                    <div className="flex items-center justify-end gap-2 md:gap-1">
                       <button 
                         onClick={() => handleEdit(p)}
-                        className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                        className="p-2.5 md:p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block"
                       >
-                        <Edit2 size={14} />
+                        <Edit2 size={16} className="md:w-3.5 md:h-3.5" />
+                        <span className="md:hidden text-[10px] font-bold uppercase">Sửa đợt TT</span>
                       </button>
                       <button 
                         onClick={() => handleDelete(p.payment_id)}
-                        className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                        className="p-2.5 md:p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block"
                       >
-                        <Trash2 size={14} />
+                        <Trash2 size={16} className="md:w-3.5 md:h-3.5" />
+                        <span className="md:hidden text-[10px] font-bold uppercase text-red-400">Xóa</span>
                       </button>
                     </div>
                   </td>
