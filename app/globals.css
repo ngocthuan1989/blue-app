@@ -20,12 +20,41 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.compact-table {
-  width: 100%;
-  border-collapse: collapse;
+/* Responsive Table Helper */
+.table-container {
+  @apply overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0;
+}
+
+@media (max-width: 768px) {
+  .compact-table thead {
+    display: none;
+  }
+  .compact-table, .compact-table tbody, .compact-table tr, .compact-table td {
+    display: block;
+    width: 100%;
+  }
+  .compact-table tr {
+    @apply mb-4 bg-white rounded-xl border border-slate-200 shadow-sm p-4;
+  }
+  .compact-table td {
+    @apply flex justify-between items-center py-2 px-0 border-none whitespace-normal;
+    text-align: right;
+  }
+  .compact-table td::before {
+    content: attr(data-label);
+    @apply font-bold text-slate-400 uppercase text-[10px] tracking-wider text-left;
+  }
+  .compact-table td:first-child {
+    @apply text-left font-black text-blue-600 text-sm mb-2 pt-0;
+    display: block;
+  }
+  .compact-table td:first-child::before {
+    display: none;
+  }
 }
 
 .compact-table th {

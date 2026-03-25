@@ -12,9 +12,10 @@ import {
   StickyNote,
   ChevronLeft,
   ChevronRight,
-  FolderOpen
+  Menu,
+  X
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 const menuItems = [
@@ -36,80 +37,108 @@ const menuItems = [
 export default function Sidebar({ projects = [] }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   const activeProjects = projects.filter(p => p.trang_thai === 'construction').slice(0, 5);
 
   return (
-    <aside className={cn(
-      "h-screen bg-white border-r border-slate-200 flex flex-col transition-all duration-300",
-      collapsed ? "w-[64px]" : "w-[240px]"
-    )}>
-      <div className="p-4 flex items-center justify-between border-bottom border-slate-100">
-        {!collapsed && <span className="font-bold text-blue-600 text-lg tracking-tight uppercase">Progress</span>}
+    <>
+      {/* Mobile Toggle Button */}
+      <div className="md:hidden fixed top-4 right-4 z-[60]">
         <button 
-          onClick={() => setCollapsed(!collapsed)}
-          className="p-1.5 hover:bg-slate-50 rounded-md text-slate-400"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="p-3 bg-blue-600 text-white rounded-full shadow-xl shadow-blue-200 focus:outline-none"
         >
-          {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
-      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto custom-scrollbar">
-        {/* Main Navigation */}
-        <div className="space-y-1 mb-6">
-          {!collapsed && <p className="px-3 mb-2 text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Hệ thống</p>}
-          {menuItems.map((item) => {
-            const isActive = pathname === item.href;
-            const Icon = item.icon;
-            return (
-              <Link 
-                key={item.href} 
-                href={item.href}
-                className={cn(
-                  "sidebar-item text-[12px]",
-                  isActive && "active",
-                  collapsed && "justify-center"
-                )}
-              >
-                <Icon size={14} />
-                {!collapsed && <span>{item.label}</span>}
-              </Link>
-            );
-          })}
+      {/* Mobile Backdrop */}
+      {mobileOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 md:hidden transition-opacity"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      <aside className={cn(
+        "h-screen bg-white border-r border-slate-200 flex flex-col transition-all duration-300 z-50",
+        "fixed md:sticky top-0 left-0",
+        mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
+        collapsed ? "w-[64px]" : "w-[260px] md:w-[240px]"
+      )}>
+        <div className="p-4 flex items-center justify-between border-b border-slate-100">
+          <span className="font-black text-blue-600 text-lg tracking-tight uppercase">Progress</span>
+          <button 
+            onClick={() => setCollapsed(!collapsed)}
+            className="p-1.5 hover:bg-slate-50 rounded-md text-slate-400 hidden md:block"
+          >
+            {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+          </button>
         </div>
 
-        {/* Quick Project Access */}
-        {!collapsed && activeProjects.length > 0 && (
-          <div className="space-y-1 pt-4 border-t border-slate-50">
-            <p className="px-3 mb-2 text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Đang thi công</p>
-            {activeProjects.map((p) => (
-              <Link 
-                key={p.project_id} 
-                href={`/du-an/${p.project_id}`}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 transition-all group",
-                  pathname.includes(p.project_id) && "bg-blue-50 text-blue-600 font-bold"
-                )}
-              >
-                <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" />
-                <span className="text-[11px] truncate text-slate-600 group-hover:text-blue-600">{p.ten_du_an}</span>
-              </Link>
-            ))}
+        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto custom-scrollbar">
+          {/* Main Navigation */}
+          <div className="space-y-1 mb-6">
+            {!collapsed && <p className="px-3 mb-2 text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Hệ thống</p>}
+            {menuItems.map((item) => {
+              const isActive = pathname === item.href;
+              const Icon = item.icon;
+              return (
+                <Link 
+                  key={item.href} 
+                  href={item.href}
+                  className={cn(
+                    "sidebar-item text-[12px] py-2.5 md:py-1.5",
+                    isActive && "active",
+                    collapsed && "justify-center"
+                  )}
+                >
+                  <Icon size={16} />
+                  {(!collapsed || mobileOpen) && <span>{item.label}</span>}
+                </Link>
+              );
+            })}
           </div>
-        )}
-      </nav>
 
-      <div className="p-4 border-t border-slate-100">
-        <div className={cn("flex items-center gap-3", collapsed && "justify-center")}>
-          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-[11px] font-bold shadow-lg shadow-blue-200">NT</div>
-          {!collapsed && (
-            <div className="min-w-0">
-              <p className="font-bold text-slate-700 truncate text-xs">Điều hành</p>
-              <p className="text-[10px] text-slate-400 truncate uppercase font-bold tracking-tighter">Premium Edition</p>
+          {/* Quick Project Access */}
+          {(!collapsed || mobileOpen) && activeProjects.length > 0 && (
+            <div className="space-y-1 pt-4 border-t border-slate-50">
+              <p className="px-3 mb-2 text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Đang thi công</p>
+              {activeProjects.map((p) => (
+                <Link 
+                  key={p.project_id} 
+                  href={`/du-an/${p.project_id}`}
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 transition-all group",
+                    pathname.includes(p.project_id) && "bg-blue-50 text-blue-600 font-bold"
+                  )}
+                >
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" />
+                  <span className="text-[11px] truncate text-slate-600 group-hover:text-blue-600">{p.ten_du_an}</span>
+                </Link>
+              ))}
             </div>
           )}
+        </nav>
+
+        <div className="p-4 border-t border-slate-100 bg-white">
+          <div className={cn("flex items-center gap-3", (collapsed && !mobileOpen) && "justify-center")}>
+            <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-[11px] font-bold shadow-lg shadow-blue-200">NT</div>
+            {(!collapsed || mobileOpen) && (
+              <div className="min-w-0">
+                <p className="font-bold text-slate-700 truncate text-xs">Điều hành</p>
+                <p className="text-[10px] text-slate-400 truncate uppercase font-bold tracking-tighter">Premium Edition</p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }

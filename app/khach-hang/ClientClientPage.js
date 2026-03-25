@@ -51,17 +51,30 @@ export default function ClientClientPage({ initialClients }) {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 px-0 md:px-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-bold text-slate-800">Danh mục Khách hàng</h1>
-          <p className="text-slate-500 text-xs">Quản lý danh sách khách hàng và thông tin liên hệ</p>
+          <p className="text-slate-500 text-xs uppercase font-bold tracking-wider mt-0.5">Quản lý đối tác & Dự án</p>
         </div>
-        <button onClick={handleAdd} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-xs font-bold shadow-md shadow-blue-500/10"><Plus size={16} /> Thêm khách hàng</button>
+        <button onClick={handleAdd} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:py-2 rounded-xl flex items-center justify-center gap-2 text-sm sm:text-xs font-bold shadow-lg shadow-blue-200 transition-all active:scale-95 w-full sm:w-auto"><Plus size={18} /> Thêm khách hàng</button>
       </div>
-      <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm"><div className="relative"><Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} /><input type="text" placeholder="Tìm theo tên hoặc mã KH..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none" /></div></div>
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
+
+      <div className="bg-white p-2 sm:p-3 rounded-xl border border-slate-200 shadow-sm">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+          <input 
+            type="text" 
+            placeholder="Tìm theo tên hoặc mã KH..." 
+            value={searchTerm} 
+            onChange={(e) => setSearchTerm(e.target.value)} 
+            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm sm:text-xs outline-none focus:ring-2 focus:ring-blue-100 transition-all" 
+          />
+        </div>
+      </div>
+
+      <div className="bg-white md:rounded-xl border-y md:border border-slate-200 shadow-sm overflow-hidden -mx-4 md:mx-0">
+        <div className="table-container">
           <table className="compact-table">
             <thead>
               <tr>
@@ -119,16 +132,22 @@ export default function ClientClientPage({ initialClients }) {
             <tbody>
               {sortedData.map((c) => (
                 <tr key={c.client_id}>
-                  <td className="font-mono text-[11px] font-semibold text-blue-600">{c.client_id}</td>
-                  <td className="font-semibold text-slate-700">{c.ten_khach_hang}</td>
-                  <td className="text-slate-500">{c.loai_cong_trinh}</td>
-                  <td>{c.nguoi_lien_he}</td>
-                  <td className="text-slate-500">{c.so_dien_thoai}</td>
-                  <td className="text-slate-400 text-[11px]">{c.nguon_khach}</td>
-                  <td className="text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <button onClick={() => handleEdit(c)} className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"><Edit2 size={14} /></button>
-                      <button onClick={() => handleDelete(c.client_id)} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"><Trash2 size={14} /></button>
+                  <td data-label="Mã KH" className="font-mono text-[11px] font-semibold text-blue-600">{c.client_id}</td>
+                  <td data-label="Khách hàng" className="font-semibold text-slate-700">{c.ten_khach_hang}</td>
+                  <td data-label="Loại">{c.loai_cong_trinh}</td>
+                  <td data-label="Liên hệ">{c.nguoi_lien_he}</td>
+                  <td data-label="SĐT" className="text-slate-500">{c.so_dien_thoai}</td>
+                  <td data-label="Nguồn" className="text-slate-400 text-[11px]">{c.nguon_khach}</td>
+                  <td className="text-right pt-4 md:pt-1.5 border-t border-slate-50 md:border-none">
+                    <div className="flex items-center justify-end gap-2 md:gap-1">
+                      <button onClick={() => handleEdit(c)} className="p-2.5 md:p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block">
+                        <Edit2 size={16} className="md:w-3.5 md:h-3.5" />
+                        <span className="md:hidden text-[10px] font-bold uppercase">Sửa</span>
+                      </button>
+                      <button onClick={() => handleDelete(c.client_id)} className="p-2.5 md:p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block">
+                        <Trash2 size={16} className="md:w-3.5 md:h-3.5" />
+                        <span className="md:hidden text-[10px] font-bold uppercase text-red-400">Xóa</span>
+                      </button>
                     </div>
                   </td>
                 </tr>
