@@ -41,7 +41,7 @@ export default async function Home() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-slate-800 tracking-tight">Trung Tâm Điều Hành</h1>
+          <h1 className="text-2xl font-black text-slate-800 tracking-tight">Hệ Thống Quản Lý Tiến Độ Blue</h1>
           <p className="text-slate-500 text-xs font-medium uppercase tracking-wider">Hệ thống quản trị tiến độ & dòng tiền nội thất</p>
         </div>
         <div className="flex items-center gap-3">
