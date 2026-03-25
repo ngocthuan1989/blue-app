@@ -42,17 +42,30 @@ export default function SpaceClientPage({ initialSpaces, projects }) {
   const handleDelete = async (id) => { if (confirm("Xóa hạng mục này?")) await removeSpace(id); };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 px-0 md:px-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-bold text-slate-800">Hạng mục & Không gian</h1>
-          <p className="text-slate-500 text-xs">Theo dõi tiến độ thi công và thiết kế cho từng phòng/khu vực</p>
+          <p className="text-slate-500 text-xs uppercase font-bold tracking-wider mt-0.5">Theo dõi chi tiết từng phòng & khu vực</p>
         </div>
-        <button onClick={handleAdd} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-xs font-bold shadow-md shadow-blue-500/10"><Plus size={16} /> Thêm hạng mục</button>
+        <button onClick={handleAdd} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:py-2 rounded-xl flex items-center justify-center gap-2 text-sm sm:text-xs font-bold transition-all shadow-lg shadow-blue-200 active:scale-95 w-full sm:w-auto"><Plus size={18} /> Thêm hạng mục</button>
       </div>
-      <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm"><div className="relative"><Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} /><input type="text" placeholder="Tìm theo dự án hoặc hạng mục..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none" /></div></div>
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
+
+      <div className="bg-white p-2 sm:p-3 rounded-xl border border-slate-200 shadow-sm">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+          <input 
+            type="text" 
+            placeholder="Tìm dự án hoặc hạng mục..." 
+            value={searchTerm} 
+            onChange={(e) => setSearchTerm(e.target.value)} 
+            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm sm:text-xs outline-none focus:ring-2 focus:ring-blue-100 transition-all" 
+          />
+        </div>
+      </div>
+
+      <div className="bg-white md:rounded-xl border-y md:border border-slate-200 shadow-sm overflow-hidden -mx-4 md:mx-0">
+        <div className="table-container">
           <table className="compact-table">
             <thead>
               <tr>
@@ -110,26 +123,34 @@ export default function SpaceClientPage({ initialSpaces, projects }) {
             <tbody>
               {sortedData.map((s) => (
                 <tr key={s.room_id}>
-                  <td className="text-slate-500 max-w-[150px] truncate">{getProjectName(s.project_id)}</td>
-                  <td className="font-semibold text-slate-700">{s.ten_khong_gian}</td>
-                  <td className="text-slate-500">{s.dien_tich_m2} m²</td>
-                  <td><span className={cn("px-2 py-0.5 rounded-full text-[10px] font-bold uppercase", s.muc_uu_tien === 'Cao' ? "bg-red-50 text-red-600" : "bg-slate-100 text-slate-500")}>{s.muc_uu_tien}</span></td>
-                  <td>
-                    <span className={cn("px-2 py-0.5 rounded-full text-[10px] font-bold uppercase", s.trang_thai_thi_cong === 'Đã xong' ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700")}>
+                  <td data-label="Dự án" className="text-slate-500 font-bold md:font-normal text-xs md:max-w-[150px] md:truncate">{getProjectName(s.project_id)}</td>
+                  <td data-label="Không gian" className="font-bold text-slate-700 text-sm md:text-xs">{s.ten_khong_gian}</td>
+                  <td data-label="Diện tích" className="text-slate-500 font-mono">{s.dien_tich_m2} m²</td>
+                  <td data-label="Mức ưu tiên"><span className={cn("px-2 py-0.5 rounded-full text-[10px] font-black uppercase", s.muc_uu_tien === 'Cao' ? "bg-red-50 text-red-600 border border-red-100" : "bg-slate-100 text-slate-500")}>{s.muc_uu_tien}</span></td>
+                  <td data-label="Trạng thái">
+                    <span className={cn("px-2 py-0.5 rounded-full text-[10px] font-black uppercase", s.trang_thai_thi_cong === 'Đã xong' ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700")}>
                       {s.trang_thai_thi_cong}
                     </span>
                   </td>
-                  <td className="text-slate-400 text-[11px] font-mono">{s.ngay_thi_cong_du_kien || "-"}</td>
-                  <td className="text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <button onClick={() => handleEdit(s)} className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"><Edit2 size={14} /></button>
-                      <button onClick={() => handleDelete(s.room_id)} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"><Trash2 size={14} /></button>
+                  <td data-label="Dự kiến" className="text-slate-400 text-[11px] font-mono">{s.ngay_thi_cong_du_kien || "-"}</td>
+                  <td className="text-right pt-4 md:pt-1.5 border-t border-slate-50 md:border-none">
+                    <div className="flex items-center justify-end gap-2 md:gap-1">
+                      <button onClick={() => handleEdit(s)} className="p-2.5 md:p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block">
+                        <Edit2 size={16} className="md:w-3.5 md:h-3.5" />
+                        <span className="md:hidden text-[10px] font-bold uppercase">Sửa hạng mục</span>
+                      </button>
+                      <button onClick={() => handleDelete(s.room_id)} className="p-2.5 md:p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block">
+                        <Trash2 size={16} className="md:w-3.5 md:h-3.5" />
+                        <span className="md:hidden text-[10px] font-bold uppercase text-red-400">Xóa</span>
+                      </button>
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      </div>          </table>
         </div>
       </div>
       {isModalOpen && <SpaceModal space={editingItem} onClose={() => setIsModalOpen(false)} action={editingItem ? editSpace.bind(null, editingItem.room_id) : addSpace} projects={projects} />}

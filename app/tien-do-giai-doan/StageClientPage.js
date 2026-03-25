@@ -43,17 +43,30 @@ export default function StageClientPage({ initialStages, projects, personnel }) 
   const handleDelete = async (id) => { if (confirm("Xóa giai đoạn này?")) await removeStage(id); };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 px-0 md:px-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-bold text-slate-800">Tiến độ Giai đoạn</h1>
-          <p className="text-slate-500 text-xs">Quản lý các mốc thời gian (Phase) và người phụ trách chính</p>
+          <p className="text-slate-500 text-xs uppercase font-bold tracking-wider mt-0.5">Quản lý các mốc thời gian & Phase</p>
         </div>
-        <button onClick={handleAdd} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-xs font-bold shadow-md shadow-blue-500/10"><Plus size={16} /> Thêm giai đoạn</button>
+        <button onClick={handleAdd} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:py-2 rounded-xl flex items-center justify-center gap-2 text-sm sm:text-xs font-bold transition-all shadow-lg shadow-blue-200 active:scale-95 w-full sm:w-auto"><Plus size={18} /> Thêm giai đoạn</button>
       </div>
-      <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm"><div className="relative"><Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} /><input type="text" placeholder="Tìm theo dự án hoặc tên giai đoạn..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none" /></div></div>
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
+
+      <div className="bg-white p-2 sm:p-3 rounded-xl border border-slate-200 shadow-sm">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+          <input 
+            type="text" 
+            placeholder="Tìm dự án hoặc tên giai đoạn..." 
+            value={searchTerm} 
+            onChange={(e) => setSearchTerm(e.target.value)} 
+            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm sm:text-xs outline-none focus:ring-2 focus:ring-blue-100 transition-all" 
+          />
+        </div>
+      </div>
+
+      <div className="bg-white md:rounded-xl border-y md:border border-slate-200 shadow-sm overflow-hidden -mx-4 md:mx-0">
+        <div className="table-container">
           <table className="compact-table">
             <thead>
               <tr>
@@ -78,28 +91,36 @@ export default function StageClientPage({ initialStages, projects, personnel }) 
             <tbody>
               {sortedData.map((s) => (
                 <tr key={s.stage_id}>
-                  <td className="text-slate-500 max-w-[150px] truncate">{getProjectName(s.project_id)}</td>
-                  <td className="font-semibold text-slate-700">{s.ten_giai_doan}</td>
-                  <td className="text-slate-500 text-[11px]">{getUserName(s.nguoi_phu_trach_id)}</td>
-                  <td>
-                    <div className="flex items-center gap-2">
-                      <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden min-w-[60px]">
+                  <td data-label="Dự án" className="text-slate-500 font-bold md:font-normal text-xs md:max-w-[150px] md:truncate">{getProjectName(s.project_id)}</td>
+                  <td data-label="Giai đoạn" className="font-bold text-slate-700 text-sm md:text-xs">{s.ten_giai_doan}</td>
+                  <td data-label="Phụ trách" className="text-slate-500 text-[11px] font-medium">{getUserName(s.nguoi_phu_trach_id)}</td>
+                  <td data-label="Tiến độ">
+                    <div className="flex items-center gap-2 justify-end md:justify-start">
+                      <div className="hidden md:block flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden min-w-[60px]">
                         <div className="h-full bg-blue-600" style={{ width: `${s.tien_do_phan_tram || 0}%` }}></div>
                       </div>
-                      <span className="text-[11px] font-bold text-slate-600">{s.tien_do_phan_tram || 0}%</span>
+                      <span className="text-[11px] font-black text-blue-600">{s.tien_do_phan_tram || 0}%</span>
                     </div>
                   </td>
-                  <td>{s.cham_tien_do === "Có" ? <span className="text-red-600 font-bold text-[10px] uppercase">Có</span> : "-"}</td>
-                  <td>
-                    <div className="flex items-center gap-1">
-                      <button onClick={() => handleEdit(s)} className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"><Edit2 size={14} /></button>
-                      <button onClick={() => handleDelete(s.stage_id)} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"><Trash2 size={14} /></button>
+                  <td data-label="Trạng thái">{s.cham_tien_do === "Có" ? <span className="text-red-600 font-black text-[10px] uppercase border border-red-100 bg-red-50 px-1.5 py-0.5 rounded">⚠️ Chậm</span> : <span className="text-slate-300">-</span>}</td>
+                  <td className="text-right pt-4 md:pt-1.5 border-t border-slate-50 md:border-none">
+                    <div className="flex items-center justify-end gap-2 md:gap-1">
+                      <button onClick={() => handleEdit(s)} className="p-2.5 md:p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block">
+                        <Edit2 size={16} className="md:w-3.5 md:h-3.5" />
+                        <span className="md:hidden text-[10px] font-bold uppercase">Sửa giai đoạn</span>
+                      </button>
+                      <button onClick={() => handleDelete(s.stage_id)} className="p-2.5 md:p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block">
+                        <Trash2 size={16} className="md:w-3.5 md:h-3.5" />
+                        <span className="md:hidden text-[10px] font-bold uppercase text-red-400">Xóa</span>
+                      </button>
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      </div>          </table>
         </div>
       </div>
       {isModalOpen && <StageModal stage={editingItem} onClose={() => setIsModalOpen(false)} action={editingItem ? editStage.bind(null, editingItem.stage_id) : addStage} projects={projects} personnel={personnel} />}
