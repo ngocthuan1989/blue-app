@@ -33,7 +33,7 @@ export default async function Home() {
     { label: "Dự án vận hành", value: projects.length, icon: Briefcase, color: "blue", detail: `${projects.filter(p => p.trang_thai === 'construction').length} đang thi công` },
     { label: "Tín hiệu Đỏ", value: [...new Set(redProjects)].length, icon: AlertCircle, color: "red", detail: "Cần can thiệp gấp" },
     { label: "Vật tư về chậm", value: lateItems.length, icon: Clock, color: "orange", detail: "Ảnh hưởng tiến độ" },
-    { label: "Công nợ khách", value: `${Math.round(totalDebt/1000000)}M`, icon: DollarSign, color: "green", detail: "Dòng tiền cần thu" },
+    { label: "Công nợ khách", value: formatCurrency(totalDebt), icon: DollarSign, color: "green", detail: "Dòng tiền cần thu (đ)" },
   ];
 
   return (
@@ -88,8 +88,8 @@ export default async function Home() {
                 <div className={cn("p-2.5 rounded-xl shadow-lg transition-transform group-hover:scale-110", colors)}>
                   <Icon size={20} />
                 </div>
-                <div className="text-right">
-                  <span className="text-3xl font-black text-slate-800 tracking-tighter">{m.value}</span>
+                <div className="text-right overflow-hidden">
+                  <span className="text-xl md:text-2xl lg:text-3xl font-black text-slate-800 tracking-tighter block truncate">{m.value}</span>
                 </div>
               </div>
               <div className="mt-4">
@@ -222,7 +222,7 @@ export default async function Home() {
             <h3 className="font-black text-[10px] tracking-[0.2em] uppercase opacity-60 mb-4">Sức khỏe tài chính</h3>
             <div className="space-y-6">
               <div>
-                <p className="text-3xl font-black tracking-tighter">{(totalRevenue/1000000).toFixed(1)}B</p>
+                <p className="text-2xl font-black tracking-tighter truncate">{formatCurrency(totalRevenue)} đ</p>
                 <p className="text-[10px] font-bold uppercase text-emerald-400 mt-1">Tổng doanh thu chốt</p>
               </div>
               <div className="pt-6 border-t border-white/10">
