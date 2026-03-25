@@ -64,50 +64,49 @@ export default function MaterialClientPage({ initialItems, projects }) {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 px-0 md:px-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-bold text-slate-800">Cung ứng Vật tư</h1>
-          <p className="text-slate-500 text-xs">Theo dõi đặt hàng, giao hàng và thanh toán vật tư</p>
+          <p className="text-slate-500 text-xs uppercase font-bold tracking-wider mt-0.5">Theo dõi đặt hàng & Giao nhận</p>
         </div>
         <button 
           onClick={handleAdd}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-xs font-bold transition-all shadow-md shadow-blue-500/10"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:py-2 rounded-xl flex items-center justify-center gap-2 text-sm sm:text-xs font-bold transition-all shadow-lg shadow-blue-200 active:scale-95 w-full sm:w-auto"
         >
-          <Plus size={16} /> Thêm vật tư
+          <Plus size={18} /> Thêm vật tư mới
         </button>
       </div>
 
-      <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
+      <div className="bg-white p-2 sm:p-3 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center gap-3">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
           <input 
             type="text" 
-            placeholder="Tìm kiếm tên vật tư, nhà cung cấp..."
+            placeholder="Tìm vật tư, nhà cung cấp..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500"
+            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm sm:text-xs outline-none focus:ring-2 focus:ring-blue-100 transition-all"
           />
         </div>
-        <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400 border-l pl-4">
-          <span className="uppercase">Bộ lọc:</span>
+        <div className="flex items-center gap-1.5 p-1 bg-slate-50 rounded-lg border border-slate-100">
           <button 
             onClick={() => setFilterLate(false)}
-            className={cn("px-2 py-1 rounded transition-colors", !filterLate ? "bg-slate-100 text-slate-600" : "hover:bg-slate-50")}
+            className={cn("flex-1 md:flex-none px-3 py-1.5 rounded-md text-[10px] font-black uppercase transition-all", !filterLate ? "bg-white text-blue-600 shadow-sm" : "text-slate-400 hover:text-slate-600")}
           >
             Tất cả
           </button>
           <button 
             onClick={() => setFilterLate(true)}
-            className={cn("px-2 py-1 rounded transition-colors", filterLate ? "bg-red-50 text-red-600" : "hover:bg-slate-50")}
+            className={cn("flex-1 md:flex-none px-3 py-1.5 rounded-md text-[10px] font-black uppercase transition-all", filterLate ? "bg-red-500 text-white shadow-lg shadow-red-100" : "text-slate-400 hover:text-red-400")}
           >
             Chậm hàng
           </button>
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="bg-white md:rounded-xl border-y md:border border-slate-200 shadow-sm overflow-hidden -mx-4 md:mx-0">
+        <div className="table-container">
           <table className="compact-table">
             <thead>
               <tr>
@@ -173,14 +172,14 @@ export default function MaterialClientPage({ initialItems, projects }) {
             <tbody>
               {sortedData.map((i) => (
                 <tr key={i.item_id}>
-                  <td className="text-slate-500 max-w-[150px] truncate" title={getProjectName(i.project_id)}>
+                  <td data-label="Dự án" className="text-slate-500 font-bold md:font-normal text-xs md:max-w-[150px] truncate" title={getProjectName(i.project_id)}>
                     {getProjectName(i.project_id)}
                   </td>
-                  <td className="font-semibold text-slate-700">{i.ten_vat_tu}</td>
-                  <td className="text-slate-500">{i.nhom_vat_tu}</td>
-                  <td className="font-mono text-[11px]">{i.so_luong} {i.don_vi}</td>
-                  <td>{i.nha_cung_cap}</td>
-                  <td>
+                  <td data-label="Vật tư" className="font-bold text-slate-700 text-sm md:text-xs">{i.ten_vat_tu}</td>
+                  <td data-label="Nhóm">{i.nhom_vat_tu}</td>
+                  <td data-label="Số lượng" className="font-mono text-[11px] font-bold">{i.so_luong} {i.don_vi}</td>
+                  <td data-label="Nhà CC">{i.nha_cung_cap}</td>
+                  <td data-label="Trạng thái">
                     <span className={cn(
                       "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase",
                       i.trang_thai_mua_hang === 'Đã quyết toán' ? "bg-green-100 text-green-700" :
@@ -190,26 +189,28 @@ export default function MaterialClientPage({ initialItems, projects }) {
                       {i.trang_thai_mua_hang}
                     </span>
                   </td>
-                  <td>
+                  <td data-label="Cảnh báo">
                     {i.hang_ve_cham === "Có" ? (
-                      <span className="flex items-center gap-1 text-red-600 font-bold text-[10px] uppercase">
-                        <AlertTriangle size={10} /> Chậm
+                      <span className="flex items-center gap-1 text-red-600 font-black text-[10px] uppercase">
+                        <AlertTriangle size={12} /> Chậm hàng
                       </span>
-                    ) : "-"}
+                    ) : <span className="text-slate-300">-</span>}
                   </td>
-                  <td className="text-right">
-                    <div className="flex items-center justify-end gap-1">
+                  <td className="text-right pt-4 md:pt-1.5 border-t border-slate-50 md:border-none">
+                    <div className="flex items-center justify-end gap-2 md:gap-1">
                       <button 
                         onClick={() => handleEdit(i)}
-                        className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                        className="p-2.5 md:p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block"
                       >
-                        <Edit2 size={14} />
+                        <Edit2 size={16} className="md:w-3.5 md:h-3.5" />
+                        <span className="md:hidden text-[10px] font-bold uppercase">Sửa vật tư</span>
                       </button>
                       <button 
                         onClick={() => handleDelete(i.item_id)}
-                        className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                        className="p-2.5 md:p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block"
                       >
-                        <Trash2 size={14} />
+                        <Trash2 size={16} className="md:w-3.5 md:h-3.5" />
+                        <span className="md:hidden text-[10px] font-bold uppercase text-red-400">Xóa</span>
                       </button>
                     </div>
                   </td>
@@ -217,6 +218,8 @@ export default function MaterialClientPage({ initialItems, projects }) {
               ))}
             </tbody>
           </table>
+        </div>
+      </div>          </table>
         </div>
       </div>
 

@@ -63,38 +63,38 @@ export default function ProjectClientPage({ initialProjects }) {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 px-0 md:px-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-bold text-slate-800">Danh mục Dự án</h1>
-          <p className="text-slate-500 text-xs">Quản lý danh sách, tiến độ và trạng thái dự án</p>
+          <p className="text-slate-500 text-xs uppercase font-bold tracking-wider mt-0.5">Quản lý tiến độ & hồ sơ công trình</p>
         </div>
         <button 
           onClick={handleAdd}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-xs font-bold transition-all shadow-md shadow-blue-500/10"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:py-2 rounded-xl flex items-center justify-center gap-2 text-sm sm:text-xs font-bold transition-all shadow-lg shadow-blue-200 active:scale-95 w-full sm:w-auto"
         >
-          <Plus size={16} /> Thêm dự án mới
+          <Plus size={18} /> Thêm dự án mới
         </button>
       </div>
 
-      <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
+      <div className="bg-white p-2 sm:p-3 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
           <input 
             type="text" 
-            placeholder="Tìm kiếm theo tên hoặc mã dự án..."
+            placeholder="Tìm kiếm dự án..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500"
+            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm sm:text-xs outline-none focus:ring-2 focus:ring-blue-100 transition-all"
           />
         </div>
-        <button className="p-2 border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-50">
-          <Filter size={14} />
+        <button className="p-2.5 border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-50 active:bg-slate-100">
+          <Filter size={16} />
         </button>
       </div>
 
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="bg-white md:rounded-xl border-y md:border border-slate-200 shadow-sm overflow-hidden -mx-4 md:mx-0">
+        <div className="table-container">
           <table className="compact-table">
             <thead>
               <tr>
@@ -152,10 +152,10 @@ export default function ProjectClientPage({ initialProjects }) {
             <tbody>
               {sortedData.map((p) => (
                 <tr key={p.project_id}>
-                  <td className="font-mono text-[11px] font-semibold text-blue-600">{p.ma_du_an}</td>
-                  <td className="py-3">
+                  <td data-label="Mã dự án" className="font-mono text-[11px] font-semibold text-blue-600">{p.ma_du_an}</td>
+                  <td data-label="Dự án" className="py-3">
                     <Link href={`/du-an/${p.project_id}`} className="group/item">
-                      <p className="font-bold text-slate-800 group-hover/item:text-blue-600 transition-colors">{p.ten_du_an}</p>
+                      <p className="font-bold text-slate-800 group-hover/item:text-blue-600 transition-colors text-sm md:text-xs">{p.ten_du_an}</p>
                       <div className="flex items-center gap-2 mt-0.5">
                         <p className="text-[10px] font-mono text-slate-400">{p.ma_du_an}</p>
                         {p.canh_bao_chinh && (
@@ -164,7 +164,7 @@ export default function ProjectClientPage({ initialProjects }) {
                       </div>
                     </Link>
                   </td>
-                  <td>
+                  <td data-label="Trạng thái">
                     <span className={cn(
                       "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase",
                       p.trang_thai === 'completed' ? "bg-green-100 text-green-700" :
@@ -174,29 +174,31 @@ export default function ProjectClientPage({ initialProjects }) {
                       {p.trang_thai}
                     </span>
                   </td>
-                  <td>
-                    <div className="flex items-center gap-2">
-                      <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden min-w-[60px]">
+                  <td data-label="Tiến độ">
+                    <div className="flex items-center gap-2 justify-end md:justify-start">
+                      <div className="hidden md:block flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden min-w-[60px]">
                         <div className="h-full bg-blue-600" style={{ width: `${p.tien_do_tong_phan_tram || 0}%` }}></div>
                       </div>
-                      <span className="text-[11px] font-bold text-slate-600">{p.tien_do_tong_phan_tram || 0}%</span>
+                      <span className="text-[11px] font-black text-blue-600">{p.tien_do_tong_phan_tram || 0}%</span>
                     </div>
                   </td>
-                  <td className="font-medium">{formatCurrency(p.gia_tri_hop_dong)} đ</td>
-                  <td className="text-slate-500 text-[11px]">{p.ngay_ban_giao_du_kien ? String(p.ngay_ban_giao_du_kien).split('T')[0] : "-"}</td>
-                  <td className="text-right">
-                    <div className="flex items-center justify-end gap-1">
+                  <td data-label="Giá trị HĐ" className="font-bold text-slate-700">{formatCurrency(p.gia_tri_hop_dong)} đ</td>
+                  <td data-label="Bàn giao" className="text-slate-500 text-[11px]">{p.ngay_ban_giao_du_kien ? String(p.ngay_ban_giao_du_kien).split('T')[0] : "-"}</td>
+                  <td className="text-right pt-4 md:pt-1.5 border-t border-slate-50 md:border-none">
+                    <div className="flex items-center justify-end gap-2 md:gap-1">
                       <button 
                         onClick={() => handleEdit(p)}
-                        className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                        className="p-2.5 md:p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block"
                       >
-                        <Edit2 size={14} />
+                        <Edit2 size={16} className="md:w-3.5 md:h-3.5" />
+                        <span className="md:hidden text-[10px] font-bold uppercase">Sửa hồ sơ</span>
                       </button>
                       <button 
                         onClick={() => handleDelete(p.project_id)}
-                        className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                        className="p-2.5 md:p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block"
                       >
-                        <Trash2 size={14} />
+                        <Trash2 size={16} className="md:w-3.5 md:h-3.5" />
+                        <span className="md:hidden text-[10px] font-bold uppercase text-red-400">Xóa</span>
                       </button>
                     </div>
                   </td>
