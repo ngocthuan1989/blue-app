@@ -14,12 +14,12 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="vi">
-      <body className="flex h-screen overflow-hidden">
+      <body className="flex h-screen overflow-hidden w-full max-w-none bg-slate-50">
         <Toaster position="top-right" richColors />
         <CommandPalette projects={projects} />
         <Sidebar projects={projects} />
-        <main className="flex-1 flex flex-col min-w-0 bg-slate-50 overflow-hidden">
-          <div className="flex-1 overflow-auto p-4 md:p-8">
+        <main className="flex-1 flex flex-col min-w-0 w-full overflow-hidden bg-slate-50">
+          <div className="flex-1 overflow-auto p-4 md:p-10 w-full max-w-none">
             {children}
           </div>
         </main>

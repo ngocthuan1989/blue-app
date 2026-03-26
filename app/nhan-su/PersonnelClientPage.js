@@ -86,7 +86,7 @@ export default function PersonnelClientPage({ initialPersonnel }) {
         </div>
       </div>
 
-      <div className="bg-white md:rounded-xl border-y md:border border-slate-200 shadow-sm overflow-hidden -mx-4 md:mx-0">
+      <div className="bg-white border-y md:border md:rounded-xl border-slate-200 shadow-sm overflow-hidden w-full">
         <div className="table-container">
           <table className="compact-table">
             <thead>
