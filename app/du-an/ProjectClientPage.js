@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Plus, Edit2, Trash2, Search, Filter, ChevronUp, ChevronDown } from "lucide-react";
 import { ProjectModal } from "@/components/ProjectModal";
 import { addProject, editProject, removeProject } from "@/app/actions";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { cn, formatCurrency, formatDate } from "@/lib/utils";
 import { toast } from "sonner";
 
 export default function ProjectClientPage({ initialProjects }) {

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Search, Layout, ChevronUp, ChevronDown } from "lucide-react";
 import { SpaceModal } from "@/components/SpaceModal";
 import { addSpace, editSpace, removeSpace } from "@/app/actions";
-import { , formatDate } from "@/lib/utils";
+import { cn, , formatDate } from "@/lib/utils";
 
 export default function SpaceClientPage({ initialSpaces, projects }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

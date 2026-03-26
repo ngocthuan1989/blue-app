@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Search, Calendar, AlertCircle, ChevronUp, ChevronDown } from "lucide-react";
 import { PaymentModal } from "@/components/PaymentModal";
 import { addPayment, editPayment, removePayment } from "@/app/actions";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { cn, formatCurrency, formatDate } from "@/lib/utils";
 import { toast } from "sonner";
 
 export default function PaymentClientPage({ initialPayments, projects }) {

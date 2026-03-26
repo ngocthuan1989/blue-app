@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Search, StickyNote, Flag } from "lucide-react";
 import { NoteModal } from "@/components/NoteModal";
 import { addNote, editNote, removeNote } from "@/app/actions";
-import { , formatDate } from "@/lib/utils";
+import { cn, , formatDate } from "@/lib/utils";
 
 export default function NoteClientPage({ initialNotes, projects, personnel }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

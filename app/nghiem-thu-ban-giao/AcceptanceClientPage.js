@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Search, CheckCircle, AlertCircle, ChevronUp, ChevronDown } from "lucide-react";
 import { AcceptanceModal } from "@/components/AcceptanceModal";
 import { addAcceptance, editAcceptance, removeAcceptance } from "@/app/actions";
-import { , formatDate } from "@/lib/utils";
+import { cn, , formatDate } from "@/lib/utils";
 
 export default function AcceptanceClientPage({ initialAcceptances, projects }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
