@@ -19,7 +19,7 @@ export default async function RootLayout({ children }) {
         <CommandPalette projects={projects} />
         <Sidebar projects={projects} />
         <main className="flex-1 flex flex-col min-w-0 bg-slate-50 overflow-hidden">
-          <div className="flex-1 overflow-auto p-6">
+          <div className="flex-1 overflow-auto p-4 md:p-8">
             {children}
           </div>
         </main>

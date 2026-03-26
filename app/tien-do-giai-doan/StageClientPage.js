@@ -120,8 +120,6 @@ export default function StageClientPage({ initialStages, projects, personnel }) 
             </tbody>
           </table>
         </div>
-      </div>          </table>
-        </div>
       </div>
       {isModalOpen && <StageModal stage={editingItem} onClose={() => setIsModalOpen(false)} action={editingItem ? editStage.bind(null, editingItem.stage_id) : addStage} projects={projects} personnel={personnel} />}
     </div>

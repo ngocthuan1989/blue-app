@@ -219,8 +219,6 @@ export default function MaterialClientPage({ initialItems, projects }) {
             </tbody>
           </table>
         </div>
-      </div>          </table>
-        </div>
       </div>
 
       {isModalOpen && (

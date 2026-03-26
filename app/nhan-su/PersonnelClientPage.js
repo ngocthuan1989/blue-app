@@ -193,8 +193,6 @@ export default function PersonnelClientPage({ initialPersonnel }) {
             </tbody>
           </table>
         </div>
-      </div>          </table>
-        </div>
       </div>
 
       {isModalOpen && (

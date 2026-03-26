@@ -104,8 +104,6 @@ export default function CostClientPage({ initialCosts, projects }) {
             </tbody>
           </table>
         </div>
-      </div>          </table>
-        </div>
       </div>
       {isModalOpen && <CostModal cost={editingItem} onClose={() => setIsModalOpen(false)} action={editingItem ? editCost.bind(null, editingItem.cost_id) : addCost} projects={projects} />}
     </div>

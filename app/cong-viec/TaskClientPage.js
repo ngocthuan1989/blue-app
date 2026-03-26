@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Search, CheckCircle2, ChevronUp, ChevronDown } from "lucide-react";
 import { TaskModal } from "@/components/TaskModal";
 import { addTask, editTask, removeTask } from "@/app/actions";
-import { cn, , formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 
 export default function TaskClientPage({ initialTasks, projects, personnel }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

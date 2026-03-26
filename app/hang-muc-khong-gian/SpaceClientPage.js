@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Search, Layout, ChevronUp, ChevronDown } from "lucide-react";
 import { SpaceModal } from "@/components/SpaceModal";
 import { addSpace, editSpace, removeSpace } from "@/app/actions";
-import { cn, , formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 
 export default function SpaceClientPage({ initialSpaces, projects }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -149,8 +149,6 @@ export default function SpaceClientPage({ initialSpaces, projects }) {
               ))}
             </tbody>
           </table>
-        </div>
-      </div>          </table>
         </div>
       </div>
       {isModalOpen && <SpaceModal space={editingItem} onClose={() => setIsModalOpen(false)} action={editingItem ? editSpace.bind(null, editingItem.room_id) : addSpace} projects={projects} />}

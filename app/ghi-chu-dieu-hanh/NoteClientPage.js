@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Search, StickyNote, Flag } from "lucide-react";
 import { NoteModal } from "@/components/NoteModal";
 import { addNote, editNote, removeNote } from "@/app/actions";
-import { cn, , formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 
 export default function NoteClientPage({ initialNotes, projects, personnel }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -63,7 +63,7 @@ export default function NoteClientPage({ initialNotes, projects, personnel }) {
             <tbody>
               {filtered.slice().reverse().map((n) => (
                 <tr key={n.note_id}>
-                  <td data-label="Dự án" className="text-slate-500 font-bold md:font-normal text-xs md:max-w-[150px] truncate">{getProjectName(n.project_id)}</td>
+                  <td data-label="Dự án" className="text-slate-500 font-bold md:font-normal text-xs md:max-w-[150px] md:truncate">{getProjectName(n.project_id)}</td>
                   <td data-label="Tín hiệu">
                     <div className="flex items-center justify-end md:justify-start gap-1.5 font-black text-[10px] uppercase">
                       <div className={cn("w-2.5 h-2.5 rounded-full", n.den_tin_hieu === 'Xanh' ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" : n.den_tin_hieu === 'Vàng' ? "bg-orange-400" : "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]")} />
