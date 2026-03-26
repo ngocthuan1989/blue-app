@@ -1,5 +1,5 @@
 import { getProjectDetail } from "@/lib/excel-db";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { cn, formatCurrency, formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProjectTimeline from "@/components/ProjectTimeline";
