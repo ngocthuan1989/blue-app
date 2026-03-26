@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Search, StickyNote, Flag } from "lucide-react";
 import { NoteModal } from "@/components/NoteModal";
 import { addNote, editNote, removeNote } from "@/app/actions";
-import { cn } from "@/lib/utils";
+import { , formatDate } from "@/lib/utils";
 
 export default function NoteClientPage({ initialNotes, projects, personnel }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -72,7 +72,7 @@ export default function NoteClientPage({ initialNotes, projects, personnel }) {
                   </td>
                   <td data-label="Nội dung" className="font-bold text-slate-700 text-sm md:text-xs md:max-w-[300px] md:truncate" title={n.noi_dung_tom_tat}>{n.noi_dung_tom_tat}</td>
                   <td data-label="Cập nhật">{getUserName(n.nguoi_cap_nhat_id)}</td>
-                  <td data-label="Thời gian" className="text-slate-400 text-[11px] font-mono">{n.ngay_cap_nhat ? String(n.ngay_cap_nhat).split('T')[0] : "-"}</td>
+                  <td data-label="Thời gian" className="text-slate-400 text-[11px] font-mono">{formatDate(n.ngay_cap_nhat)}</td>
                   <td className="text-right pt-4 md:pt-1.5 border-t border-slate-50 md:border-none">
                     <div className="flex items-center justify-end gap-2 md:gap-1">
                       <button onClick={() => handleEdit(n)} className="p-2.5 md:p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block">

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Search, Layout, ChevronUp, ChevronDown } from "lucide-react";
 import { SpaceModal } from "@/components/SpaceModal";
 import { addSpace, editSpace, removeSpace } from "@/app/actions";
-import { cn } from "@/lib/utils";
+import { , formatDate } from "@/lib/utils";
 
 export default function SpaceClientPage({ initialSpaces, projects }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -132,7 +132,7 @@ export default function SpaceClientPage({ initialSpaces, projects }) {
                       {s.trang_thai_thi_cong}
                     </span>
                   </td>
-                  <td data-label="Dự kiến" className="text-slate-400 text-[11px] font-mono">{s.ngay_thi_cong_du_kien || "-"}</td>
+                  <td data-label="Dự kiến" className="text-slate-400 text-[11px] font-mono">{formatDate(s.ngay_thi_cong_du_kien)}</td>
                   <td className="text-right pt-4 md:pt-1.5 border-t border-slate-50 md:border-none">
                     <div className="flex items-center justify-end gap-2 md:gap-1">
                       <button onClick={() => handleEdit(s)} className="p-2.5 md:p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block">

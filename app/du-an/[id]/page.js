@@ -1,5 +1,5 @@
 import { getProjectDetail } from "@/lib/excel-db";
-import { cn, formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProjectTimeline from "@/components/ProjectTimeline";
@@ -72,7 +72,7 @@ export default async function ProjectDetailPage({ params }) {
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Ngày bàn giao dự kiến</p>
                 <div className="flex items-center gap-2 text-slate-700 font-bold">
                   <Calendar size={14} className="text-slate-300" />
-                  {project.ngay_ban_giao_du_kien}
+                  {formatDate(project.ngay_ban_giao_du_kien)}
                 </div>
               </div>
               <div>
@@ -182,7 +182,7 @@ export default async function ProjectDetailPage({ params }) {
                     </div>
                     <div className="flex-1 pb-6 border-b border-slate-50 group-last:border-0 group-last:pb-0">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-[10px] font-black text-slate-400 uppercase">{note.ngay_cap_nhat}</span>
+                        <span className="text-[10px] font-black text-slate-400 uppercase">{formatDate(note.ngay_cap_nhat)}</span>
                         <span className="text-[9px] font-bold text-slate-300 uppercase italic">Cập nhật bởi: {note.nguoi_cap_nhat_id}</span>
                       </div>
                       <p className="text-sm font-bold text-slate-700 mb-2">{note.noi_dung_tom_tat}</p>

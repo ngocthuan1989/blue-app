@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Search, CheckCircle2, ChevronUp, ChevronDown } from "lucide-react";
 import { TaskModal } from "@/components/TaskModal";
 import { addTask, editTask, removeTask } from "@/app/actions";
-import { cn } from "@/lib/utils";
+import { , formatDate } from "@/lib/utils";
 
 export default function TaskClientPage({ initialTasks, projects, personnel }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -85,7 +85,7 @@ export default function TaskClientPage({ initialTasks, projects, personnel }) {
                   <td data-label="Công việc" className="font-bold text-slate-700 text-sm md:text-xs">{t.ten_cong_viec}</td>
                   <td data-label="Phụ trách">{getUserName(t.nguoi_phu_trach_id)}</td>
                   <td data-label="Ưu tiên"><span className={cn("px-2 py-0.5 rounded-full text-[10px] font-black uppercase", t.muc_uu_tien === 'Cao' ? "bg-red-50 text-red-600" : "bg-slate-100 text-slate-500")}>{t.muc_uu_tien}</span></td>
-                  <td data-label="Hạn xử lý" className="text-slate-400 text-[11px] font-mono">{t.han_xu_ly || "-"}</td>
+                  <td data-label="Hạn xử lý" className="text-slate-400 text-[11px] font-mono">{formatDate(t.han_xu_ly)}</td>
                   <td className="text-right pt-4 md:pt-1.5 border-t border-slate-50 md:border-none">
                     <div className="flex items-center justify-end gap-2 md:gap-1">
                       <button onClick={() => handleEdit(t)} className="p-2.5 md:p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border md:border-none border-slate-100 flex items-center gap-2 md:block">

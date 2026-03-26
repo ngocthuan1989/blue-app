@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Search, Calendar, AlertCircle, ChevronUp, ChevronDown } from "lucide-react";
 import { PaymentModal } from "@/components/PaymentModal";
 import { addPayment, editPayment, removePayment } from "@/app/actions";
-import { cn, formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatDate } from "@/lib/utils";
 import { toast } from "sonner";
 
 export default function PaymentClientPage({ initialPayments, projects }) {
@@ -164,7 +164,7 @@ export default function PaymentClientPage({ initialPayments, projects }) {
                   <td data-label="Đến hạn" className="text-slate-500 text-[11px] font-bold">
                     <div className="flex items-center gap-1 justify-end md:justify-start">
                       <Calendar size={12} className="opacity-40 hidden md:block" />
-                      {p.ngay_den_han ? String(p.ngay_den_han).split('T')[0] : "-"}
+                      {formatDate(p.ngay_den_han)}
                     </div>
                   </td>
                   <td data-label="Trạng thái">

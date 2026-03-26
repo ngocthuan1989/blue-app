@@ -1,5 +1,5 @@
 import { readExcel, getAllData } from "@/lib/excel-db";
-import { cn, formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { 
   Users, 
@@ -247,7 +247,7 @@ export default async function Home() {
                     note.den_tin_hieu === 'Xanh' ? "bg-green-500" : note.den_tin_hieu === 'Vàng' ? "bg-orange-400" : "bg-red-500"
                   )} />
                   <p className="text-xs font-bold text-slate-700 leading-tight">{note.noi_dung_tom_tat}</p>
-                  <p className="text-[9px] text-slate-400 mt-1 uppercase font-bold tracking-wider">{note.ngay_cap_nhat}</p>
+                  <p className="text-[9px] text-slate-400 mt-1 uppercase font-bold tracking-wider">{formatDate(note.ngay_cap_nhat)}</p>
                 </div>
               ))}
             </div>

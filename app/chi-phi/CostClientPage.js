@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Search, DollarSign, ChevronUp, ChevronDown } from "lucide-react";
 import { CostModal } from "@/components/CostModal";
 import { addCost, editCost, removeCost } from "@/app/actions";
-import { cn, formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatDate } from "@/lib/utils";
 
 export default function CostClientPage({ initialCosts, projects }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -85,7 +85,7 @@ export default function CostClientPage({ initialCosts, projects }) {
                   <td data-label="Nội dung" className="font-bold text-slate-700 text-sm md:text-xs">{c.noi_dung_chi}</td>
                   <td data-label="Phân nhóm"><span className="text-[10px] font-black px-2 py-0.5 rounded bg-slate-100 text-slate-600 uppercase">{c.nhom_chi_phi}</span></td>
                   <td data-label="Giá trị" className="font-black text-orange-600">{formatCurrency(c.so_tien)} đ</td>
-                  <td data-label="Thời gian" className="text-slate-400 text-[11px] font-mono">{c.ngay_chi ? String(c.ngay_chi).split('T')[0] : "-"}</td>
+                  <td data-label="Thời gian" className="text-slate-400 text-[11px] font-mono">{formatDate(c.ngay_chi)}</td>
                   <td data-label="Nhà CC">{c.nha_cung_cap}</td>
                   <td className="text-right pt-4 md:pt-1.5 border-t border-slate-50 md:border-none">
                     <div className="flex items-center justify-end gap-2 md:gap-1">

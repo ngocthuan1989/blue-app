@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Plus, Edit2, Trash2, Search, Filter, ChevronUp, ChevronDown } from "lucide-react";
 import { ProjectModal } from "@/components/ProjectModal";
 import { addProject, editProject, removeProject } from "@/app/actions";
-import { cn, formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatDate } from "@/lib/utils";
 import { toast } from "sonner";
 
 export default function ProjectClientPage({ initialProjects }) {
@@ -183,7 +183,7 @@ export default function ProjectClientPage({ initialProjects }) {
                     </div>
                   </td>
                   <td data-label="Giá trị HĐ" className="font-bold text-slate-700">{formatCurrency(p.gia_tri_hop_dong)} đ</td>
-                  <td data-label="Bàn giao" className="text-slate-500 text-[11px]">{p.ngay_ban_giao_du_kien ? String(p.ngay_ban_giao_du_kien).split('T')[0] : "-"}</td>
+                  <td data-label="Bàn giao" className="text-slate-500 text-[11px]">{formatDate(p.ngay_ban_giao_du_kien)}</td>
                   <td className="text-right pt-4 md:pt-1.5 border-t border-slate-50 md:border-none">
                     <div className="flex items-center justify-end gap-2 md:gap-1">
                       <button 

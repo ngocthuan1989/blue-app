@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Edit2, Trash2, Search, CheckCircle, AlertCircle, ChevronUp, ChevronDown } from "lucide-react";
 import { AcceptanceModal } from "@/components/AcceptanceModal";
 import { addAcceptance, editAcceptance, removeAcceptance } from "@/app/actions";
-import { cn } from "@/lib/utils";
+import { , formatDate } from "@/lib/utils";
 
 export default function AcceptanceClientPage({ initialAcceptances, projects }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -84,7 +84,7 @@ export default function AcceptanceClientPage({ initialAcceptances, projects }) {
                   <td data-label="Dự án" className="text-slate-500 font-bold md:font-normal text-xs md:max-w-[180px] md:truncate">{getProjectName(a.project_id)}</td>
                   <td data-label="Số BB" className="font-bold text-blue-600 text-sm md:text-xs">{a.bien_ban_so}</td>
                   <td data-label="Phân loại">{a.loai_nghiem_thu}</td>
-                  <td data-label="Thời gian" className="text-slate-500 text-[11px] font-mono">{a.ngay_nghiem_thu ? String(a.ngay_nghiem_thu).split('T')[0] : "-"}</td>
+                  <td data-label="Thời gian" className="text-slate-500 text-[11px] font-mono">{formatDate(a.ngay_nghiem_thu)}</td>
                   <td data-label="Kết quả">
                     <span className={cn("px-2 py-0.5 rounded-full text-[10px] font-black uppercase", a.ket_qua === 'Đạt' ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700")}>
                       {a.ket_qua}
