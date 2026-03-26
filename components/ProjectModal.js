@@ -127,5 +127,5 @@ export function ProjectModal({ project, onClose, action }) {
         </form>
       </div>
     </div>
-  );  );
+  );
 }

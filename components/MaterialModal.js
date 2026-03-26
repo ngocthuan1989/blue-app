@@ -90,5 +90,5 @@ export function MaterialModal({ item, onClose, action, projects }) {
         </form>
       </div>
     </div>
-  );  );
+  );
 }

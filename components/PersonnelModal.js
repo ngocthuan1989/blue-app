@@ -93,5 +93,5 @@ export function PersonnelModal({ personnel, onClose, action }) {
         </form>
       </div>
     </div>
-  );  );
+  );
 }

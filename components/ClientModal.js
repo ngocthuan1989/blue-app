@@ -56,5 +56,5 @@ export function ClientModal({ client, onClose, action }) {
         </form>
       </div>
     </div>
-  );  );
+  );
 }
